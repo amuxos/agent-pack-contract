@@ -1,0 +1,15 @@
+out/
+build/
+*.egg-info/
+dist/*.whl
+dist/*.tar.gz
+dist/python-compat/
+__pycache__/
+*.pyc
+
+# Go build output (diff-parity candidate + release binaries)
+bin/
+go/bin/
+
+# SCM release packaging output
+output/

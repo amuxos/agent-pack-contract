@@ -1,0 +1,9 @@
+type = "codex"
+model = "gpt-5.4"
+supported_models = ["gpt-5.4", "gpt-5.3"]
+instructions = ["instructions/common/reviewer/AGENTS.md"]
+skills = []
+subagents = []
+
+[permission]
+permission_mode = "default"

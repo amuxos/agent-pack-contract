@@ -1,0 +1,7 @@
+source_kind = "upstream"
+asset_type = "skill"
+
+[origin]
+kind = "git"
+locator = "  example-org/review  "
+version = "  v1.2.3  "

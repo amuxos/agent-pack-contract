@@ -1,0 +1,5 @@
+description = "Review changed code."
+instructions = ["instructions/common/reviewer/AGENTS.md"]
+skills = ["review"]
+subagents = ["checker"]
+envs = ["REVIEW_TOKEN"]

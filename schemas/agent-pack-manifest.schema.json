@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/agent-pack-manifest.schema.json",
+  "title": "Agent Pack Manifest v1.1 and v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pack_namespace",
+    "profiles",
+    "namespaces"
+  ],
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "v1.1",
+        "v2"
+      ]
+    },
+    "pack_namespace": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profiles": {
+      "type": "object"
+    },
+    "providers": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/provider"
+      }
+    },
+    "namespaces": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/namespace"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "namespace",
+        "type",
+        "providers",
+        "instructions",
+        "skills",
+        "subagents",
+        "extends"
+      ],
+      "properties": {
+        "namespace": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "type": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "description": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "model": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "supported_models": {
+          "$ref": "#/$defs/stringList"
+        },
+        "providers": {
+          "$ref": "#/$defs/stringList"
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "skills": {
+          "$ref": "#/$defs/stringList"
+        },
+        "subagents": {
+          "$ref": "#/$defs/stringList"
+        },
+        "envs": {
+          "$ref": "#/$defs/stringList"
+        },
+        "extends": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "permission": {
+          "$ref": "#/$defs/permission"
+        }
+      }
+    },
+    "permission": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "permission_mode": {
+          "enum": [
+            "default",
+            "plan",
+            "bypass"
+          ]
+        },
+        "allowed_tools": {
+          "$ref": "#/$defs/stringList"
+        },
+        "ask_tools": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "platform"
+      ],
+      "properties": {
+        "platform": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "api_key_env": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "namespace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profiles"
+      ],
+      "properties": {
+        "profiles": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "portableProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "namespace",
+        "instructions",
+        "skills",
+        "subagents",
+        "extends"
+      ],
+      "properties": {
+        "namespace": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "description": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "skills": {
+          "$ref": "#/$defs/stringList"
+        },
+        "subagents": {
+          "$ref": "#/$defs/stringList"
+        },
+        "envs": {
+          "$ref": "#/$defs/stringList"
+        },
+        "extends": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "v2"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "profiles": {
+            "additionalProperties": {
+              "$ref": "#/$defs/portableProfile"
+            }
+          },
+          "providers": false
+        }
+      },
+      "else": {
+        "properties": {
+          "profiles": {
+            "additionalProperties": {
+              "$ref": "#/$defs/profile"
+            }
+          }
+        },
+        "required": [
+          "providers"
+        ]
+      }
+    }
+  ]
+}

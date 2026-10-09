@@ -1,0 +1,5 @@
+type = "codex"
+model = "gpt-5.4"
+instructions = ["instructions/zeta/auditor/AGENTS.md"]
+skills = []
+subagents = []

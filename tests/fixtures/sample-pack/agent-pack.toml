@@ -1,0 +1,5 @@
+schema_version = "v1.1"
+name = "sample-pack"
+namespace = "example-org.sample"
+description = "Minimal Agent Pack fixture."
+owners = ["example-org"]

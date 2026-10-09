@@ -1,0 +1,5 @@
+schema_version = "v2"
+name = "portable-pack"
+namespace = "example.portable"
+description = "Portable content fixture."
+owners = ["example"]
